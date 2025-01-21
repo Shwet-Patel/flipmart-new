@@ -11,7 +11,7 @@ import Link from "next/link.js";
 
 function footer() {
   return (
-    <div className="bg-black py-2 text-white text-md">
+    <div className=" bg-black py-2 text-white text-md">
       <div className="flex px-16 py-8">
         <div className="basis-3/4 flex justify-around">
           {footerdata.map((item, index) => {
@@ -59,7 +59,7 @@ function footer() {
         </div>
       </div>
 
-      <div className="flex items-center py-4 justify-around border-t border-white">
+      <div className="flex py-4 justify-around border-t border-white">
         <div>become a seller</div>
         <div>Advertise</div>
         <div>Gift cards</div>

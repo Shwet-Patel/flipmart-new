@@ -7,8 +7,7 @@ function banner() {
           Men <span className="text-yellow-400">Fashion</span>
         </h2>
         <p className="text-lg text-gray-700 mt-2">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas,
-          culpa?
+          Hand picked products of latest fashion trends right on your screen.
         </p>
         <button className="mt-4 bg-blue-600 text-white hover:bg-white hover:text-blue-400 px-6 py-2 rounded duration-300">
           Shop Now

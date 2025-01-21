@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Image from "next/image";
+import Link from "next/link";
 
 type item = {
   id: number;
@@ -33,10 +34,13 @@ function hotDeals() {
   const [error, setError] = useState<string>("");
 
   useEffect(() => {
+    const id = Math.floor(Math.random() * 10);
     const fetchdata = async () => {
       setLoading(true);
       try {
-        const response = await axios.get("https://fakestoreapi.com/products/1");
+        const response = await axios.get(
+          `https://fakestoreapi.com/products/${id}`
+        );
         console.log(response);
         setProduct(response.data);
         setLoading(false);
@@ -68,12 +72,15 @@ function hotDeals() {
               ? product?.title.substring(0, 20) + "..."
               : product?.title}
           </h3>
-          <p className="text-yellow-500 font-bold text-lg mt-2">
+          <p className="text-yellow-500 font-bold text-lg my-4">
             ${product.price}
           </p>
-          <button className="bg-yellow-300 px-4 py-2 rounded-md text-black hover:bg-gray-400 duration-300">
-            Add to cart
-          </button>
+          <Link
+            href={`/products/${product.id}`}
+            className="bg-yellow-300 px-4 py-2 rounded-md text-black hover:bg-gray-400 duration-300"
+          >
+            details
+          </Link>
         </div>
       )}
     </div>

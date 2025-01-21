@@ -40,7 +40,7 @@ function categories() {
             return (
               <Link
                 key={index}
-                href=""
+                href={`/${c}`}
                 className="text-gray-700 hover:text-blue-600"
               >
                 {c}

@@ -1,5 +1,5 @@
 import Banner from "./components/banner";
-import NewProducts from "./components/newProducts";
+import NewProducts from "./components/productsDisplay";
 import Categories from "./components/categories";
 import HotDeals from "./components/hotDeals";
 
@@ -14,7 +14,7 @@ export default function Home() {
 
         <div className="col-span-9">
           <Banner />
-          <NewProducts />
+          <NewProducts title="Explore New Products" category="new" />
         </div>
       </div>
 
