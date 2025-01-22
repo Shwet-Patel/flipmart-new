@@ -3,56 +3,34 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
-
-type item = {
-  id: number;
-  title: string;
-  price: number;
-  description: string;
-  category: string;
-  image: string;
-  rating?: {
-    rate: number;
-    count: number;
-  };
-};
+import { fetchProducts } from "@/services/fetchproduct";
 
 function productsDisplay({
   title,
   category,
 }: {
   title: string;
-  category: string | undefined;
+  category: string;
 }) {
   const [products, setProducts] = useState<item[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const url =
-      category === "new"
-        ? "https://fakestoreapi.com/products"
-        : `https://fakestoreapi.com/products/category/${category}`;
-
-    const fetchdata = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get(url);
-        // console.log(response);
-        setProducts(response.data);
-        setLoading(false);
-      } catch (error: any) {
-        setError(error.message);
-        setLoading(false);
-      }
+    setLoading(true);
+    const fetching = async () => {
+      const { data, error } = await fetchProducts(category);
+      setProducts(data);
+      setError(error);
+      setLoading(false);
     };
 
-    fetchdata();
+    fetching();
   }, []);
 
   return (
     <div className="mt-8 bg-gray-200 rounded p-4">
-      <h2 className="font-semibold">{title}</h2>
+      <h2 className="text-xl font-semibold">{title}</h2>
       <div className="flex overflow-x-scroll hide-scrollbar mt-4 gap-x-4">
         {!loading &&
           !error &&

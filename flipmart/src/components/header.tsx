@@ -1,10 +1,14 @@
 import Link from "next/link";
+import { IoCartOutline } from "react-icons/io5";
 
 function header() {
   return (
     <header className="bg-blue-600 text-white">
       <div className="flex items-center justify-between py-4 px-16">
-        <Link href={"/"} className="text-2xl font-bold pr-4">
+        <Link
+          href={"/"}
+          className="text-2xl font-bold pr-4 hover:text-gray-800 duration-300"
+        >
           Flipmart
         </Link>
 
@@ -19,7 +23,12 @@ function header() {
         </div>
 
         <div className="flex items-center space-x-4 ml-4">
-          <div>Cart: $600.00</div>
+          <Link
+            href={"/cart"}
+            className="bg-yellow-400 text-black hover:bg-white duration-300 rounded px-1 py-1  text-2xl"
+          >
+            <IoCartOutline />
+          </Link>
           <button className="bg-yellow-400 text-black hover:bg-white px-3 py-1 rounded duration-300">
             Today's Offer
           </button>

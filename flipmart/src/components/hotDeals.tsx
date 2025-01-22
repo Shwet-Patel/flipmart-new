@@ -4,19 +4,6 @@ import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 
-type item = {
-  id: number;
-  title: string;
-  price: number;
-  description: string;
-  category: string;
-  image: string;
-  rating: {
-    rate: number;
-    count: number;
-  };
-};
-
 function hotDeals() {
   const [product, setProduct] = useState<item>({
     id: 0,

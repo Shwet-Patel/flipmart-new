@@ -5,19 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 
-type item = {
-  id: number;
-  title: string;
-  price: number;
-  description: string;
-  category: string;
-  image: string;
-  rating?: {
-    rate: number;
-    count: number;
-  };
-};
-
 function page() {
   const category = useParams<{ category: string }>().category.replace(
     "%20",
@@ -69,7 +56,11 @@ function page() {
                 <h1 className="text-lg font-semibold my-2">
                   Price: <span className="">$ {t.price}</span>
                 </h1>
-                <h1 className=" text-sm  my-2 mb-4">{t.description}</h1>
+                <h1 className=" text-sm  my-2 mb-4">
+                  {t.description.length > 400
+                    ? t.description.substring(0, 400) + "..."
+                    : t.description}
+                </h1>
                 <Link
                   href={`/products/${t.id}`}
                   className="bg-yellow-300 px-4 py-2 rounded-md text-black hover:bg-gray-400 duration-300"

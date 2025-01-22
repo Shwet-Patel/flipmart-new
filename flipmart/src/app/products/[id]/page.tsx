@@ -5,20 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 
-import ProductsDisplay from "@/app/components/productsDisplay";
-
-type item = {
-  id: number;
-  title: string;
-  price: number;
-  description: string;
-  category: string;
-  image: string;
-  rating: {
-    rate: number;
-    count: number;
-  };
-};
+import ProductsDisplay from "@/components/productsDisplay";
 
 function details() {
   const id = useParams<{ id: string }>().id;
@@ -72,8 +59,8 @@ function details() {
               Rating:
               <span className="text-gray-700">
                 {" "}
-                {product?.rating.rate} ( average of total{" "}
-                {product?.rating.count} ratings){" "}
+                {product?.rating?.rate} ( average of total{" "}
+                {product?.rating?.count} ratings){" "}
               </span>
             </div>
 

@@ -4,7 +4,7 @@ function banner() {
       <div className="px-10 pt-10 ">
         <h2 className="text-md font-bold text-gray-600">SPRING 2016</h2>
         <h2 className="text-4xl font-bold text-gray-900">
-          Men <span className="text-yellow-400">Fashion</span>
+          Men <span className="text-yellow-600">Fashion</span>
         </h2>
         <p className="text-lg text-gray-700 mt-2">
           Hand picked products of latest fashion trends right on your screen.
