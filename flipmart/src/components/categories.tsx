@@ -3,28 +3,23 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
 
+import { fetchAllCategories } from "@/services/category.service";
+
 function categories() {
   const [category, setCategory] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const fetchdata = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get(
-          "https://fakestoreapi.com/products/categories"
-        );
-        // console.log(response);
-        setCategory(response.data);
-        setLoading(false);
-      } catch (error: any) {
-        setError(error.message);
-        setLoading(false);
-      }
+    setLoading(true);
+    const fetching = async () => {
+      const { data, error } = await fetchAllCategories();
+      setCategory(data);
+      setError(error);
+      setLoading(false);
     };
 
-    fetchdata();
+    fetching();
   }, []);
 
   return (

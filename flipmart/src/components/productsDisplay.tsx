@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
-import { fetchProducts } from "@/services/fetchproduct";
+import { fetchCategoryProducts } from "@/services/products.service";
 
 function productsDisplay({
   title,
@@ -19,7 +19,7 @@ function productsDisplay({
   useEffect(() => {
     setLoading(true);
     const fetching = async () => {
-      const { data, error } = await fetchProducts(category);
+      const { data, error } = await fetchCategoryProducts(category);
       setProducts(data);
       setError(error);
       setLoading(false);

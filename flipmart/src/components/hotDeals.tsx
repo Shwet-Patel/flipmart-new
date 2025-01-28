@@ -1,43 +1,25 @@
 "use client";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 
+import { fetchHotDeals } from "@/services/products.service";
+
 function hotDeals() {
-  const [product, setProduct] = useState<item>({
-    id: 0,
-    title: "",
-    price: 0,
-    description: "",
-    category: "",
-    image: "",
-    rating: {
-      rate: 0,
-      count: 0,
-    },
-  });
+  const [product, setProduct] = useState<item>();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
 
   useEffect(() => {
-    const id = Math.floor(Math.random() * 10);
-    const fetchdata = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get(
-          `https://fakestoreapi.com/products/${id}`
-        );
-        console.log(response);
-        setProduct(response.data);
-        setLoading(false);
-      } catch (error: any) {
-        setError(error.message);
-        setLoading(false);
-      }
+    setLoading(true);
+    const fetching = async () => {
+      const { data, error } = await fetchHotDeals();
+      setProduct(data);
+      setError(error);
+      setLoading(false);
     };
 
-    fetchdata();
+    fetching();
   }, []);
 
   return (
@@ -55,15 +37,15 @@ function hotDeals() {
             />
           )}
           <h3 className="text-lg font-semibold mt-4">
-            {product?.title?.length > 20
-              ? product?.title.substring(0, 20) + "..."
-              : product?.title}
+            {(product?.title && product.title.length > 20
+              ? product.title.substring(0, 20) + "..."
+              : product?.title) || "No title"}
           </h3>
           <p className="text-yellow-500 font-bold text-lg my-4">
-            ${product.price}
+            ${product?.price}
           </p>
           <Link
-            href={`/products/${product.id}`}
+            href={`/products/${product?.id}`}
             className="bg-yellow-300 px-4 py-2 rounded-md text-black hover:bg-gray-400 duration-300"
           >
             details

@@ -5,41 +5,28 @@ import Link from "next/link";
 import axios from "axios";
 import Image from "next/image";
 
+import { fetchCartDetails } from "@/services/cart.service";
+
 function cart() {
-  const [cartItems, setCartItems] = useState<cart>();
   const [productDetails, setProductDetails] = useState<item[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState();
   const [total, setTotal] = useState<number>(0);
 
   useEffect(() => {
-    const url = "https://fakestoreapi.com/carts/1";
+    setLoading(true);
+    const fetching = async () => {
+      const { data, error }: { data: item[]; error: any } =
+        await fetchCartDetails();
 
-    const fetchdata = async () => {
-      setLoading(true);
-      try {
-        const response: cart = (await axios.get(url)).data;
-        setCartItems(response);
+      let total = 0;
 
-        response.products.forEach(async ({ productId, quantity }) => {
-          const res = await axios.get(
-            `https://fakestoreapi.com/products/${productId}`
-          );
-
-          setProductDetails((prev) => [
-            ...prev,
-            { ...res.data, itemQuantity: quantity },
-          ]);
-        });
-
-        setLoading(false);
-      } catch (error: any) {
-        setError(error.message);
-        setLoading(false);
-      }
+      setProductDetails(data);
+      setError(error);
+      setLoading(false);
     };
 
-    fetchdata();
+    fetching();
   }, []);
 
   return (
@@ -49,15 +36,21 @@ function cart() {
           <h1 className="text-2xl text-gray-800 font-semibold mb-4">
             Shopping Cart
           </h1>
-          <h3 className="text-right mr-8">Net Price</h3>
-          <hr />
+
           <div className="p-4 mt-4">
+            <div className="flex my-4 ">
+              <div className=" flex items-center justify-center basis-3/4">
+                Details
+              </div>
+              <div className="basis-1/4 pl-16">Net Price</div>
+            </div>
+            <hr />
             {!error &&
               !loading &&
               productDetails?.map((t) => {
                 // setTotal((prev) => prev + t.price * (t.itemQuantity || 0));
                 return (
-                  <div className="flex my-4 ">
+                  <div key={t.id} className="flex my-4 ">
                     <div className=" flex items-center justify-center basis-1/4">
                       <Image
                         src={t.image}
@@ -71,21 +64,28 @@ function cart() {
                       <h3> Quantity : {t.itemQuantity} </h3>
                       <h3> Unit Price : $ {t.price} </h3>
                     </div>
-                    <div className="basis-1/4">
-                      {" "}
-                      $ {t.price * (t.itemQuantity || 0)}
+                    <div className="basis-1/4 pl-16">
+                      $ {(t.price * (t.itemQuantity || 0)).toFixed(2)}
                     </div>
                   </div>
                 );
               })}
+
+            <hr />
+            <div className="flex my-4 ">
+              <div className=" flex items-center justify-center basis-3/4">
+                Grand Total
+              </div>
+              <div className="basis-1/4 pl-16">$ {total}</div>
+            </div>
           </div>
         </div>
         <div className="basis-1/4"></div>
       </div>
-      <ProductsDisplay
+      {/* <ProductsDisplay
         title="Inspired by your browsing history"
         category="new"
-      />
+      /> */}
     </div>
   );
 }

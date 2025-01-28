@@ -1,11 +1,9 @@
 "use client";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import Image from "next/image";
-import Link from "next/link";
 import { useParams } from "next/navigation";
-
 import ProductsDisplay from "@/components/productsDisplay";
+import { fetchIndividualProduct } from "@/services/products.service";
 
 function details() {
   const id = useParams<{ id: string }>().id;
@@ -15,22 +13,15 @@ function details() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const fetchdata = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get(
-          `https://fakestoreapi.com/products/${id}`
-        );
-        console.log(response);
-        setProduct(response.data);
-        setLoading(false);
-      } catch (error: any) {
-        setError(error.message);
-        setLoading(false);
-      }
+    setLoading(true);
+    const fetching = async () => {
+      const { data, error } = await fetchIndividualProduct(id);
+      setProduct(data);
+      setError(error);
+      setLoading(false);
     };
 
-    fetchdata();
+    fetching();
   }, []);
 
   return (
@@ -83,7 +74,7 @@ function details() {
 
         <ProductsDisplay
           title={`Explore more in ${product?.category}`}
-          category={product?.category}
+          category={product?.category || "new"}
         />
         <ProductsDisplay title="New Products" category="new" />
       </div>

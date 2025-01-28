@@ -4,6 +4,7 @@ import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { fetchCategoryProducts } from "@/services/products.service";
 
 function page() {
   const category = useParams<{ category: string }>().category.replace(
@@ -16,22 +17,15 @@ function page() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const url = `https://fakestoreapi.com/products/category/${category}`;
-
-    const fetchdata = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get(url);
-        // console.log(response);
-        setProducts(response.data);
-        setLoading(false);
-      } catch (error: any) {
-        setError(error.message);
-        setLoading(false);
-      }
+    setLoading(true);
+    const fetching = async () => {
+      const { data, error } = await fetchCategoryProducts(category);
+      setProducts(data);
+      setError(error);
+      setLoading(false);
     };
 
-    fetchdata();
+    fetching();
   }, []);
 
   return (

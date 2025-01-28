@@ -6,7 +6,7 @@ import {
 } from "react-icons/ti";
 import { FaInstagram } from "react-icons/fa6";
 
-import { footerdata } from "./data.js";
+import { footerdata } from "../utils/data.js";
 import Link from "next/link.js";
 
 function footer() {

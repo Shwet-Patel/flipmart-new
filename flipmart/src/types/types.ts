@@ -18,8 +18,9 @@ type cart = {
     userId: number;
     date: Date;
     products: {
-      productId: number;
+      productId: string;
       quantity: number;
-    }[];
+  }[];
+    total?: number
   };
   
